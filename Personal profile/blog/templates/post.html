@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<p></p>
+<h2 style="margin-left: 50px">{{post['title']}}</h2>
+
+<!--    <p ></a >&nbsp by {{ post.user.username }}</p>-->
+    <p style="margin-left: 50px"></a><span class="badge badge-primary">{{ post.user.username }}</span></p>
+<!--    <span class="badge badge-warning";>{{ post.user.username }}</span>-->
+    <p style="margin-left: 50px"></a><span class="badge badge-secondry">{{post['date']}}</span></p>
+    <p style="margin-left: 50px;margin-right:50px;">{{ post.content|safe }}</p>
+    <p style="margin-left: 50px"><img src="{{ url_for('static', filename='img/' + post.image_file) }}"></p>
+
+<form method="POST">
+    <div style="margin-left: 50px;margin-right:50px;" class="form-group">
+        <label for="comment">Comment</label><br>
+        <textarea name="comment" placeholder=" " class="form-control"></textarea>
+        <label for="rate">Rate</label><br>
+        <i id="1" class="far fa-stars" data-num="1" onclick="getstars(this)"></i>
+        <i id="2" class="far fa-stars" data-num="2" onclick="getstars(this)"></i>
+        <i id="3" class="far fa-stars" data-num="3" onclick="getstars(this)"></i>
+        <i id="4" class="far fa-stars" data-num="4" onclick="getstars(this)"></i>
+        <i id="5" class="far fa-stars" data-num="5" onclick="getstars(this)"></i>
+        <input id="rate" type="hidden" name="rate" value="">
+
+    </div >
+    <div style="margin-left: 50px" class="form-group">
+        <button type="submit" class="btn btn-info">Submit</button>
+    </div>
+<h3 style="margin-left: 50px">Comment History</h3>
+
+    <div class="comment_content">
+        {% if comments %}
+        <ul>
+            {% for comment in comments %}
+            <li>
+                <span class="badge badge-primary">{{comment.user.username}}</span>
+                <span class="badge badge-secondry">{{comment['date']}}</span></p>
+                {{comment.content}}</p>
+                {% for x in range(comment.rate)%}
+                <i class="fas fa-stars"></i>
+                {% endfor %}
+                <p></p>
+                <br />
+
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        function getstars(star) {
+            let rate_value = star.getAttribute("data-num");
+
+            let rate_input = document.getElementById("rate");
+
+            rate_input.setAttribute("value", rate_value);
+
+            for (let i = 1; i <= rate_value; i++) {
+
+                let stars_selected = document.getElementById(i);
+
+                stars_selected.setAttribute("class", "fas fa-stars");
+
+                for (let j = 5; j > rate_value; j--) {
+
+                    let stars_unselected = document.getElementById(j);
+
+                    stars_unselected.setAttribute("class", "far fa-stars");
+                }
+            }
+        }
+    </script>
+
+    {% endblock content %}

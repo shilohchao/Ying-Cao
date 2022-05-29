@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block content %}
+{% if session['username']==null or session['username']=='' %}
+<h1 style="margin-left: 50px">Hello, Guest, welcome to my page</h1>
+{% else %}
+<h1 style="margin-left: 50px">Hello, {{session['username']}}, welcome to my page</h1>
+{% endif %}
+
+{% for post in posts %}
+
+<p style="margin-left: 50px"><a href="{{url_for('post', post_id=post.id)}}">
+<!--    middle methon-->
+    <!--<h2 style="margin:auto;width:50%;border:3pxsolidgreen;padding:10px;">{{post['title']}}</h2>-->
+<h2 style="margin-left: 50px">{{post['title']}}</h2>
+
+<!--    <p ></a >&nbsp by {{ post.user.username }}</p>-->
+    <p style="margin-left: 50px"></a><span class="badge badge-primary";>{{ post.user.username }}</span></p>
+<!--    <span class="badge badge-warning";>{{ post.user.username }}</span>-->
+    <p style="margin-left: 50px"></a><span class="badge badge-sencondry">{{post['date']}}</span></p>
+    <p style="margin-left: 50px;margin-right:50px;overflow: hidden; text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp:3;-webkit-box-orient: vertical">{{ post.content|safe }}</p>
+
+<!--to add create time-->
+
+    <a href="{{ url_for('post', post_id=post.id)}}">
+    <p style="margin-left: 50px"><span class="badge badge-warning">More</span></p><a/>
+
+
+{% endfor %}
+    <div>
+        <br/>
+        <br/>
+        <HR align=center width=1200 color=#987cb9 SIZE=1>
+        <p style="margin-left:490px">More information at my Linkedin <p>
+        <p style="margin-left:480px">Contact with   caoy31@cardiff.ac.uk <p>
+        <p style="margin-left:470px">Copyright©Ying Cao, Cardiff COMSC<p>
+
+    </div>
+    {% endblock content %}
+
